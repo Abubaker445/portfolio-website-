@@ -8,6 +8,8 @@
 
 /* ---------- CSS Custom Properties ---------- */
 :root {
+  --nav-height: 70px;
+  --nav-offset: 28px;
   --bg-cream: #FFF8F0;
   --bg-cream-dark: #F5EBE0;
   --brown-primary: #6B4226;
@@ -35,12 +37,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ensure anchor scrolling accounts for the fixed navbar + extra offset */
+html {
+  scroll-padding-top: calc(var(--nav-height) + var(--nav-offset));
+}
+
 body {
   background-color: var(--bg-cream);
   color: var(--text-dark);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* offset page content so fixed navbar does not overlap headings
+     added offset keeps the first heading further below the navbar */
+  padding-top: calc(var(--nav-height) + var(--nav-offset));
 }
 
 section {
@@ -90,7 +100,7 @@ section {
   background: rgba(255, 248, 240, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  height: 70px;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -200,13 +210,15 @@ section {
 
 /* ---------- 3. Landing Section ---------- */
 #landing {
-  min-height: 100vh;
+  /* make landing fill the viewport minus the fixed navbar height
+     and remove extra top padding so the title sits closer to the nav */
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 70px;
+  padding: 20px 5%;
 }
 
 .landing-name {
@@ -693,6 +705,43 @@ section {
   margin-bottom: 12px;
 }
 
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.view-live-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 1px solid var(--brown-primary);
+  border-radius: 999px;
+  color: var(--brown-primary);
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  line-height: 1.2;
+}
+
+.view-live-btn:hover {
+  background: var(--brown-primary);
+  color: var(--white);
+}
+
+.view-live-btn[data-live-url=""],
+.view-live-btn:not([data-live-url]) {
+  border-color: var(--text-light);
+  color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 .key-outcomes {
   list-style: none;
   padding: 0;
@@ -875,8 +924,15 @@ section {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   gap: 20px;
+}
+
+/* Reduce large empty space: allow achievements section to size to content
+   instead of forcing full viewport height set globally on all sections */
+#achievements {
+  min-height: auto;
+  padding: 40px 5%;
 }
 
 .stat-item {
@@ -896,17 +952,7 @@ section {
   margin-top: 8px;
 }
 
-.achievements-placeholder {
-  text-align: center;
-  color: var(--text-light);
-  padding: 40px;
-  background: var(--white);
-  border-radius: 12px;
-  border: 2px dashed var(--brown-accent);
-  font-style: italic;
-  max-width: 600px;
-  margin: 0 auto;
-}
+/* achievements placeholder removed - styling deleted */
 
 /* ---------- 11. Contact Section ---------- */
 .contact-container {

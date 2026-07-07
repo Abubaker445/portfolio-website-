@@ -387,4 +387,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     eduObserver.observe(educationSection);
   }
+
+  // View Live buttons: open data-live-url in a new tab when present
+  document.querySelectorAll('.view-live-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const url = btn.getAttribute('data-live-url') || btn.dataset.liveUrl || '';
+      if (url && url.trim()) {
+        window.open(url.trim(), '_blank', 'noopener');
+      }
+    });
+  });
+
 });
