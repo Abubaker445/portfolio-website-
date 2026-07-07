@@ -1643,6 +1643,9 @@ a.contact-value:hover {
 
   .landing-name {
     font-size: 2rem;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .landing-designation {
